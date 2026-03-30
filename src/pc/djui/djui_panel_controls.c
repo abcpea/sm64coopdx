@@ -95,7 +95,8 @@ void djui_panel_controls_create(struct DjuiBase* caller) {
         free(gamepadChoices);
 #endif
 
-        djui_slider_create(body, DLANG(CONTROLS, DEADZONE), &configStickDeadzone, 0, 100, djui_panel_controls_value_change);
+		djui_slider_create(body, DLANG(CONTROLS, SENSITIVITY), &configStickSensitivity, 0, 100, djui_panel_controls_value_change);
+		djui_slider_create(body, DLANG(CONTROLS, DEADZONE), &configStickDeadzone, 0, 100, djui_panel_controls_value_change);
         djui_slider_create(body, DLANG(CONTROLS, RUMBLE_STRENGTH), &configRumbleStrength, 0, 100, djui_panel_controls_value_change);
 
         djui_button_create(body, DLANG(MENU, BACK), DJUI_BUTTON_STYLE_BACK, djui_panel_menu_back);

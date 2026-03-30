@@ -190,16 +190,18 @@ static inline void update_analog_stick(s8 *stick_x, s8 *stick_y,
     float deadzone = configStickDeadzone * DEADZONE_STEP;
 
     if (magnitude_sq > (deadzone * deadzone)) {
-        float magnitude = sqrtf(magnitude_sq);
+		float sensitivity = configStickSensitivity / 100.f;
+		float magnitude = sqrtf(magnitude_sq);
         float dir_x = (float)input_x / magnitude;
         float dir_y = (float)input_y / magnitude;
         float scale = 1.f / fmaxf(fabsf(dir_x), fabsf(dir_y));
+		float scale_factor = 70.f + (57.f * sensitivity);
         float max_magnitude = 0x8000 * scale;
 
         magnitude -= deadzone;
         magnitude *= max_magnitude / (max_magnitude - deadzone);
         magnitude /= 0x100;
-        magnitude = fminf(magnitude, scale * 127.f);
+        magnitude = fminf(magnitude, scale * scale_factor);
 
         *stick_x = dir_x * magnitude;
         *stick_y = -dir_y * magnitude;
